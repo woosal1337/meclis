@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background-color: #120c07;
+  }
+}
+
+@layer components {
+
+  .stage-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(45, 30, 18, 0.9) 0%,
+        rgba(18, 12, 7, 1) 90%
+      );
+  }
+
+  .stage-canvas-container canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    aspect-ratio: auto !important;
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  .stage-canvas-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse at 50% 60%,
+        transparent 55%,
+        rgba(10, 6, 3, 0.55) 100%
+      );
+  }
+
+  .codex-panel {
+    background:
+      linear-gradient(180deg, #1f160c 0%, #15100a 100%);
+    border-left: 1px solid rgba(184, 154, 108, 0.18);
+    box-shadow:
+      inset 1px 0 0 rgba(255, 220, 165, 0.06),
+      inset -10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .meander {
+    position: relative;
+    height: 22px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 22' shape-rendering='crispEdges'><g fill='none' stroke='%238a4a1a' stroke-width='2'><path d='M2 19 V5 H16 V13 H10 V9 H22 V19 M22 5 H38 V13 H30 V9 H44 V19 H38 M44 5 H62 V19'/></g></svg>");
+    background-repeat: repeat-x;
+    background-position: left center;
+    background-size: auto 22px;
+    opacity: 0.45;
+  }
+
+  .smallcaps {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-family: 'Cinzel', 'EB Garamond', ui-serif, Georgia, serif;
+  }
+
+  .parchment {
+    background-color: #f2e6c4;
+    background-image:
+      radial-gradient(rgba(106, 55, 19, 0.06) 1px, transparent 1px),
+      radial-gradient(rgba(106, 55, 19, 0.04) 1px, transparent 1px);
+    background-size: 6px 6px, 11px 11px;
+    background-position: 0 0, 3px 4px;
+    color: #1f1407;
+    border: 1px solid #8a4a1a;
+    box-shadow:
+      inset 0 0 0 1px rgba(138, 74, 26, 0.25),
+      inset 0 -8px 14px rgba(106, 55, 19, 0.08),
+      0 1px 0 rgba(255, 220, 165, 0.04);
+  }
+
+  .stone {
+    background:
+      linear-gradient(180deg, #2b2014 0%, #1c1409 100%);
+    border: 1px solid #5a4324;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 236, 216, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.6);
+  }
+  .stone--active {
+    border-color: #e8a44a;
+    box-shadow:
+      inset 0 0 0 1px rgba(232, 164, 74, 0.6),
+      inset 0 0 18px rgba(232, 164, 74, 0.2),
+      0 0 14px rgba(232, 164, 74, 0.12);
+  }
+
+  .laurel-rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #b89a6c;
+    font-family: 'Cinzel', 'EB Garamond', ui-serif, Georgia, serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .laurel-rule::before,
+  .laurel-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(184, 154, 108, 0.5) 50%,
+      transparent 100%
+    );
+  }
+
+  .ember {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffd28a 0%, #e8a44a 50%, #8a4a1a 100%);
+    box-shadow: 0 0 6px rgba(232, 164, 74, 0.7);
+  }
+  .ember--idle {
+    background: #4a3a24;
+    box-shadow: none;
+    opacity: 0.5;
+  }
+  .ember--off {
+    background: #3a2a18;
+    box-shadow: none;
+    opacity: 0.3;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #5a4324 transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #5a4324;
+    border-radius: 4px;
+  }
+}
