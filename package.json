@@ -1,0 +1,30 @@
+{
+  "name": "meclis",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A 2D pixel-art viewer for Claude Code's /meclis skill. Watch your AI advisors deliberate as characters on a stage.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://github.com/woosal1337/meclis",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woosal1337/meclis.git"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:web": "pnpm --filter @meclis/web run dev",
+    "dev:server": "pnpm --filter @meclis/server run dev",
+    "build": "pnpm -r run build",
+    "typecheck": "pnpm -r run typecheck",
+    "install-hooks": "node scripts/install-hooks.mjs",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist packages/*/node_modules packages/*/dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  }
+}
