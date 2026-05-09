@@ -104,20 +104,34 @@ export default function AdvisorPage({ params }: Params) {
       <section className="stone p-5 sm:p-6 space-y-4">
         <p className="smallcaps text-bronze text-[10px]">install</p>
         <InstallCommand command={a.installCommand} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+          <a
+            href="#advisor-md"
+            className="block text-center smallcaps text-[9px] stone hover:stone--active py-3 no-underline text-parchment"
+          >
+            read pack
+          </a>
+          <a
+            href={`https://github.com/woosal1337/meclis/blob/main/collection/${a.slug}/advisor.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center smallcaps text-[9px] stone hover:stone--active py-3 no-underline text-parchment"
+          >
+            view on github
+          </a>
           <a
             href={a.rawPackUrl}
             download={`${a.slug}.md`}
-            className="block text-center smallcaps text-[10px] stone hover:stone--active py-3 no-underline text-parchment"
+            className="block text-center smallcaps text-[9px] stone hover:stone--active py-3 no-underline text-parchment"
           >
-            download advisor.md
+            download .md
           </a>
           <a
             href={rawSpriteUrl(a.slug, 'sprite.png')}
             download={`${a.slug}.png`}
-            className="block text-center smallcaps text-[10px] stone hover:stone--active py-3 no-underline text-parchment"
+            className="block text-center smallcaps text-[9px] stone hover:stone--active py-3 no-underline text-parchment"
           >
-            download sprite.png
+            download sprite
           </a>
         </div>
         <p className="text-xs text-parchment/55 leading-relaxed pt-1">
@@ -157,14 +171,29 @@ export default function AdvisorPage({ params }: Params) {
         </section>
       ) : null}
 
-      <section className="parchment p-6 sm:p-8 rounded-none">
-        <Markdown source={a.body} skipFirstH1 />
+      <section id="advisor-md" className="space-y-3 scroll-mt-10">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <h2 className="smallcaps text-bronze text-[11px]">advisor.md · the pack</h2>
+          <a
+            href={a.rawPackUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="smallcaps text-[9px] text-parchment/60 hover:text-bronze-glow underline decoration-dashed underline-offset-4"
+          >
+            view raw
+          </a>
+        </div>
+        <div className="parchment p-6 sm:p-8 rounded-none">
+          <Markdown source={a.body} skipFirstH1 />
+        </div>
       </section>
 
       {a.references ? (
-        <section className="parchment p-6 sm:p-8">
-          <h2 className="smallcaps text-bronze-deep text-[11px] mb-4">references</h2>
-          <Markdown source={a.references} />
+        <section className="space-y-3">
+          <h2 className="smallcaps text-bronze text-[11px]">references.md</h2>
+          <div className="parchment p-6 sm:p-8">
+            <Markdown source={a.references} />
+          </div>
         </section>
       ) : null}
     </article>
