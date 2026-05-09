@@ -10,7 +10,8 @@
 </p>
 
 <p align="center">
-  <a href="#quickstart"><img src="https://img.shields.io/badge/setup-2_minutes-cf8d4a?style=flat-square" alt="setup time"></a>
+  <a href="https://meclis.chele.bi"><img src="https://img.shields.io/badge/agora-meclis.chele.bi-cf8d4a?style=flat-square" alt="agora"></a>
+  <a href="https://www.npmjs.com/package/@meclis/cli"><img src="https://img.shields.io/npm/v/@meclis/cli?style=flat-square&color=cf8d4a&label=cli" alt="cli"></a>
   <a href="#license"><img src="https://img.shields.io/badge/license-MIT-cf8d4a?style=flat-square" alt="license"></a>
   <img src="https://img.shields.io/badge/runtime-claude_code-cf8d4a?style=flat-square" alt="runtime">
 </p>
@@ -23,7 +24,20 @@ A local web app that turns Claude Code's `/meclis` invocations into a live, watc
 
 **No `ANTHROPIC_API_KEY`. No orchestration.** Your existing Claude Code subscription does the actual work. `meclis` is a window onto it.
 
-The character cast is read straight from `~/.claude/skills/meclis/advisors/*.md`, so adding a new advisor is one file on disk away. See [Adding your own advisor](#adding-your-own-advisor) below.
+The character cast is read straight from `~/.claude/skills/meclis/advisors/*.md`. Adding an advisor is one file on disk away.
+
+## The agora
+
+The public collection of curated advisor character packs lives at **<https://meclis.chele.bi>** and ships in [`collection/`](collection/) of this repo. Browse, download, contribute via PR.
+
+Install one with the CLI:
+
+```bash
+bunx @meclis/cli init                                       # first time only
+bunx @meclis/cli add paul-graham seth-godin robert-greene   # bring the seed cast
+```
+
+`npx @meclis/cli ...` works too. Full command list at <https://meclis.chele.bi/cli>.
 
 ## How it works
 
@@ -50,21 +64,24 @@ The character cast is read straight from `~/.claude/skills/meclis/advisors/*.md`
 
 ## Quickstart
 
-> Requires Node 20+, pnpm 9+, and an installed `/meclis` skill at `~/.claude/skills/meclis/`.
+> Requires Node 20+, [Bun](https://bun.sh) 1.1+, and an installed `/meclis` skill at `~/.claude/skills/meclis/`.
 
 ```bash
 git clone git@github.com:woosal1337/meclis.git
 cd meclis
-pnpm install
+bun install
 
 # 1. start the server (any persistent terminal)
-pnpm dev:server                         # listens on http://localhost:3001
+bun run dev:server                      # listens on http://localhost:3001
 
 # 2. install the hooks into ~/.claude/settings.json (idempotent, makes a .bak)
-pnpm install-hooks
+bun run install-hooks
 
 # 3. open the viewer (any time, leave the tab open)
-pnpm dev:web                            # http://localhost:5173
+bun run dev:web                         # http://localhost:5173
+
+# 4. add advisors from the agora
+bunx @meclis/cli add paul-graham seth-godin robert-greene
 ```
 
 Then in any Claude Code session:
@@ -81,34 +98,50 @@ To turn the integration off:
 node scripts/install-hooks.mjs --uninstall
 ```
 
-## Adding your own advisor
+## Adding an advisor
 
-The cast is auto-discovered from the filesystem — no code changes required.
+Two paths.
 
-1. Drop a markdown character pack at `~/.claude/skills/meclis/advisors/<slug>.md`. The pack's first line must be `# <Display Name>` so the hook can identify them.
-2. Optional: drop a `896×1200` PNG sprite at `apps/web/public/assets/sprites/<slug>.png`. If you don't, `meclis` falls back to a colored silhouette derived from the slug.
-3. Reload the viewer. Your new advisor appears in the speakers panel and on stage.
+**Use one from the agora** (recommended):
 
-A character pack should describe identity, voice rules, frameworks, and signature quotes. The repo includes Paul Graham, Seth Godin, and Robert Greene as worked examples in `apps/web/public/assets/sprites/` and as advisor packs the user installs separately. See [`docs/authoring-advisors.md`](docs/authoring-advisors.md) for the full structure and [`scripts/generate-sprites.md`](scripts/generate-sprites.md) for a Gemini-based sprite-generation prompt that matches the existing visual style.
+```bash
+bunx @meclis/cli add <slug>
+```
+
+The CLI writes the pack to `~/.claude/skills/meclis/advisors/<slug>.md` and the matching sprite into your local meclis repo.
+
+**Author one from scratch:**
+
+1. Open a PR adding `collection/<slug>/` with `advisor.md`, `advisor.json`, `sprite.png` (896×1200, transparent), and `sprite.thumb.png`.
+2. CI validates the schema, sprite dimensions, and required sections.
+3. Once merged, the advisor appears at <https://meclis.chele.bi> and is installable via the CLI within a deploy.
+
+Full guide: [`collection/README.md`](collection/README.md) and [`docs/authoring-advisors.md`](docs/authoring-advisors.md).
 
 ## Project layout
 
 ```
 meclis/
 ├── apps/
-│   ├── web/         Vite + React + TypeScript + PixiJS frontend
-│   └── server/      Node + Hono backend (event bus + SSE broadcaster)
+│   ├── web/         Vite + React + PixiJS local viewer
+│   ├── server/      Hono server with SSE event bus
+│   ├── site/        Next.js 14 public agora at meclis.chele.bi
+│   └── cli/         @meclis/cli installer
 ├── packages/
 │   └── shared/      Event types shared between web and server
+├── collection/      curated character packs (canonical, PR-reviewed)
+│   ├── _schema/advisor.schema.json
+│   └── <slug>/{advisor.md, advisor.json, sprite.png, sprite.thumb.png}
 ├── scripts/
-│   ├── hooks/agent-event.mjs     the hook script Claude Code calls
-│   ├── install-hooks.mjs         idempotent settings.json patcher
-│   └── generate-sprites.md       Gemini prompt for new advisor sprites
-├── assets/
-│   ├── banner.png                README banner
-│   └── sprites/                  master copies of generated sprites
+│   ├── hooks/agent-event.mjs       hook script Claude Code calls
+│   ├── install-hooks.mjs           idempotent settings.json patcher
+│   ├── validate-collection.ts      schema + sprite validator (CI)
+│   ├── build-collection-index.ts   generates collection/index.json
+│   ├── generate-thumbs.ts          regenerate sprite.thumb.png
+│   └── generate-sprites.md         Gemini prompt for new advisor sprites
+├── assets/                         project banners, audio, stages
 └── docs/
-    └── authoring-advisors.md     guide for adding new advisors
+    └── authoring-advisors.md       guide for new advisor packs
 ```
 
 ## Configuration
@@ -121,6 +154,7 @@ Most things just work. The few env knobs the hook script honors:
 | `MECLIS_SECRET` | `local-only-meclis` | shared secret between hook and server |
 | `MECLIS_ADVISOR_DIR` | `~/.claude/skills/meclis/advisors` | where advisor packs live |
 | `MECLIS_DEBUG` | unset | set to anything to log hook decisions to stderr |
+| `MECLIS_RAW_BASE` | `https://raw.githubusercontent.com/woosal1337/meclis/main` | CLI source-of-truth override |
 
 Server env (`apps/server/.env`):
 
@@ -132,8 +166,6 @@ Server env (`apps/server/.env`):
 
 ## Resetting the session
 
-There are three ways to clear the running session and start fresh:
-
 1. Click **NEW SESSION** in the viewer header (cleanest).
 2. `curl -X POST http://localhost:3001/api/meclis/reset` (no UI required).
 3. Restart the server — the in-memory bus resets along with it.
@@ -141,14 +173,22 @@ There are three ways to clear the running session and start fresh:
 ## Production build
 
 ```bash
-pnpm build           # builds web + server
-pnpm --filter @meclis/server start
-pnpm --filter @meclis/web preview
+bun run build              # builds every workspace
+bun run --filter @meclis/server start
+bun run --filter @meclis/web preview
+bun run --filter @meclis/site start
 ```
 
 ## Contributing
 
-Issues and PRs are welcome. Especially valued: new advisor packs, sprite contributions in the matching style, alternative themes, and mid-turn streaming via session-jsonl tailing. See [CONTRIBUTING.md](CONTRIBUTING.md) for the open threads.
+Issues and PRs welcome. Especially valued:
+
+- **New advisor packs.** The biggest single contribution. See [`collection/README.md`](collection/README.md).
+- **Sprites in matching style.** Same style guide as the seed cast.
+- **Alternative themes.** Renaissance court, Edo-period tea house, modern boardroom — the architecture supports swapping background, palette, and bubble styling.
+- **Phase B mid-turn streaming.** Tail Claude Code's session jsonl to stream tokens as they're written.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow.
 
 ## License
 

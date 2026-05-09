@@ -1,0 +1,17 @@
+{
+  "slug": "robert-greene",
+  "displayName": "Robert Greene",
+  "aliases": ["rg", "robert", "greene"],
+  "brief": "Strategist of power and seduction on workplace politics, ambition, mentorship, and any moment somebody is being naive about how the world really works.",
+  "tags": ["strategy", "power", "politics", "history", "human-nature"],
+  "era": "1959-present",
+  "discipline": "strategist, historian",
+  "contributors": [{ "name": "ege", "github": "woosal1337" }],
+  "sources": [
+    { "title": "The 48 Laws of Power", "kind": "book" },
+    { "title": "The 33 Strategies of War", "kind": "book" },
+    { "title": "Mastery", "kind": "book" },
+    { "title": "The Laws of Human Nature", "kind": "book" }
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "seth-godin",
+  "displayName": "Seth Godin",
+  "aliases": ["seth", "godin"],
+  "brief": "Daily-blog marketer on audience, story, shipping, and making something matter without spending money on ads.",
+  "tags": ["marketing", "story", "audience", "shipping", "permission"],
+  "era": "1960-present",
+  "discipline": "marketer, blogger, author",
+  "contributors": [{ "name": "ege", "github": "woosal1337" }],
+  "sources": [
+    { "title": "seths.blog — daily blog archive", "url": "https://seths.blog", "kind": "essay" },
+    { "title": "Purple Cow", "kind": "book" },
+    { "title": "This is Marketing", "kind": "book" },
+    { "title": "Akimbo podcast", "kind": "podcast" }
+  ],
+  "version": "1.0.0"
+}

@@ -1,0 +1,36 @@
+name: validate collection
+
+on:
+  pull_request:
+    paths:
+      - 'collection/**'
+      - 'scripts/validate-collection.ts'
+      - '.github/workflows/validate-collection.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'collection/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.8
+
+      - name: install
+        run: bun install --frozen-lockfile
+
+      - name: validate collection
+        run: bun run validate-collection
+
+      - name: regenerate index.json (push only, sanity)
+        if: github.event_name == 'push'
+        run: |
+          bun run build-collection-index
+          if [[ -n "$(git status --porcelain collection/index.json)" ]]; then
+            echo "::warning::collection/index.json is stale. run: bun run build-collection-index"
+          fi

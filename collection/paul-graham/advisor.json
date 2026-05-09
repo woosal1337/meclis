@@ -1,0 +1,16 @@
+{
+  "slug": "paul-graham",
+  "displayName": "Paul Graham",
+  "aliases": ["pg", "paul", "graham"],
+  "brief": "YC essayist on ambition, taste, founders, and the moment somebody is being too clever or too compliant.",
+  "tags": ["startups", "essays", "founders", "writing", "ambition"],
+  "era": "1964-present",
+  "discipline": "essayist, founder, investor",
+  "contributors": [{ "name": "ege", "github": "woosal1337" }],
+  "sources": [
+    { "title": "paulgraham.com — collected essays", "url": "https://paulgraham.com/articles.html", "kind": "essay" },
+    { "title": "Hackers & Painters", "kind": "book" },
+    { "title": "Founders at Work interviews", "kind": "interview" }
+  ],
+  "version": "1.0.0"
+}

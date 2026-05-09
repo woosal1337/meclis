@@ -1,0 +1,32 @@
+{
+  "name": "@meclis/cli",
+  "version": "0.1.0",
+  "description": "Install meclis advisors with one command. Browse the agora at https://meclis.chele.bi.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://meclis.chele.bi/cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woosal1337/meclis.git",
+    "directory": "apps/cli"
+  },
+  "bin": {
+    "meclis": "./dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --target=node --outfile=dist/index.js && node -e \"const fs=require('fs');const p='dist/index.js';const b=fs.readFileSync(p,'utf8');if(!b.startsWith('#!'))fs.writeFileSync(p,'#!/usr/bin/env node\\n'+b);fs.chmodSync(p,0o755)\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,131 @@
+[
+  {
+    "slug": "paul-graham",
+    "displayName": "Paul Graham",
+    "aliases": [
+      "pg",
+      "paul",
+      "graham"
+    ],
+    "brief": "YC essayist on ambition, taste, founders, and the moment somebody is being too clever or too compliant.",
+    "tags": [
+      "startups",
+      "essays",
+      "founders",
+      "writing",
+      "ambition"
+    ],
+    "era": "1964-present",
+    "discipline": "essayist, founder, investor",
+    "contributors": [
+      {
+        "name": "ege",
+        "github": "woosal1337"
+      }
+    ],
+    "sources": [
+      {
+        "title": "paulgraham.com — collected essays",
+        "url": "https://paulgraham.com/articles.html",
+        "kind": "essay"
+      },
+      {
+        "title": "Hackers & Painters",
+        "kind": "book"
+      },
+      {
+        "title": "Founders at Work interviews",
+        "kind": "interview"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "slug": "robert-greene",
+    "displayName": "Robert Greene",
+    "aliases": [
+      "rg",
+      "robert",
+      "greene"
+    ],
+    "brief": "Strategist of power and seduction on workplace politics, ambition, mentorship, and any moment somebody is being naive about how the world really works.",
+    "tags": [
+      "strategy",
+      "power",
+      "politics",
+      "history",
+      "human-nature"
+    ],
+    "era": "1959-present",
+    "discipline": "strategist, historian",
+    "contributors": [
+      {
+        "name": "ege",
+        "github": "woosal1337"
+      }
+    ],
+    "sources": [
+      {
+        "title": "The 48 Laws of Power",
+        "kind": "book"
+      },
+      {
+        "title": "The 33 Strategies of War",
+        "kind": "book"
+      },
+      {
+        "title": "Mastery",
+        "kind": "book"
+      },
+      {
+        "title": "The Laws of Human Nature",
+        "kind": "book"
+      }
+    ],
+    "version": "1.0.0"
+  },
+  {
+    "slug": "seth-godin",
+    "displayName": "Seth Godin",
+    "aliases": [
+      "seth",
+      "godin"
+    ],
+    "brief": "Daily-blog marketer on audience, story, shipping, and making something matter without spending money on ads.",
+    "tags": [
+      "marketing",
+      "story",
+      "audience",
+      "shipping",
+      "permission"
+    ],
+    "era": "1960-present",
+    "discipline": "marketer, blogger, author",
+    "contributors": [
+      {
+        "name": "ege",
+        "github": "woosal1337"
+      }
+    ],
+    "sources": [
+      {
+        "title": "seths.blog — daily blog archive",
+        "url": "https://seths.blog",
+        "kind": "essay"
+      },
+      {
+        "title": "Purple Cow",
+        "kind": "book"
+      },
+      {
+        "title": "This is Marketing",
+        "kind": "book"
+      },
+      {
+        "title": "Akimbo podcast",
+        "kind": "podcast"
+      }
+    ],
+    "version": "1.0.0"
+  }
+]
