@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "bun run ../../scripts/sync-web-sprites.ts",
     "dev": "vite",
+    "prebuild": "bun run ../../scripts/sync-web-sprites.ts",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"

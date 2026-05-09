@@ -14,7 +14,9 @@ const HOME = homedir();
 const SKILLS_DIR = join(HOME, '.claude', 'skills', 'meclis');
 const ADVISORS_DIR = join(SKILLS_DIR, 'advisors');
 const VERSIONS_FILE = join(ADVISORS_DIR, '.versions.json');
-const DEFAULT_SPRITE_DIR = join(HOME, 'Documents', 'GitHub', 'meclis', 'assets', 'sprites');
+const MECLIS_REPO = join(HOME, 'Documents', 'GitHub', 'meclis');
+const DEFAULT_SPRITE_DIR = join(MECLIS_REPO, 'assets', 'sprites');
+const VIEWER_SPRITE_DIR = join(MECLIS_REPO, 'apps', 'web', 'public', 'assets', 'sprites');
 
 const c = {
   bronze: (s: string) => `\x1b[38;5;180m${s}\x1b[0m`,
@@ -177,8 +179,14 @@ async function cmdAdd(flags: Flags) {
     if (!flags.noSprite) {
       try {
         const png = await fetchBinary(`${COLLECTION_BASE}/${meta.slug}/sprite.png`);
-        mkdirSync(flags.spriteDir, { recursive: true });
-        writeFileSync(join(flags.spriteDir, `${meta.slug}.png`), Buffer.from(png));
+        const targets = [flags.spriteDir];
+        if (existsSync(MECLIS_REPO) && flags.spriteDir === DEFAULT_SPRITE_DIR) {
+          targets.push(VIEWER_SPRITE_DIR);
+        }
+        for (const dir of targets) {
+          mkdirSync(dir, { recursive: true });
+          writeFileSync(join(dir, `${meta.slug}.png`), Buffer.from(png));
+        }
       } catch (err) {
         console.warn(c.dim(`  (sprite skipped: ${(err as Error).message})`));
       }
@@ -258,6 +266,10 @@ async function cmdRemove(flags: Flags) {
     }
     rmSync(target);
     delete versions[meta.slug];
+    for (const dir of [DEFAULT_SPRITE_DIR, VIEWER_SPRITE_DIR]) {
+      const sprite = join(dir, `${meta.slug}.png`);
+      if (existsSync(sprite)) rmSync(sprite);
+    }
     console.log(`${c.green('✓')} removed ${meta.slug}`);
   }
   writeVersions(versions);
@@ -281,8 +293,14 @@ async function cmdUpdate(flags: Flags) {
     if (!flags.noSprite) {
       try {
         const png = await fetchBinary(`${COLLECTION_BASE}/${meta.slug}/sprite.png`);
-        mkdirSync(flags.spriteDir, { recursive: true });
-        writeFileSync(join(flags.spriteDir, `${meta.slug}.png`), Buffer.from(png));
+        const targets = [flags.spriteDir];
+        if (existsSync(MECLIS_REPO) && flags.spriteDir === DEFAULT_SPRITE_DIR) {
+          targets.push(VIEWER_SPRITE_DIR);
+        }
+        for (const dir of targets) {
+          mkdirSync(dir, { recursive: true });
+          writeFileSync(join(dir, `${meta.slug}.png`), Buffer.from(png));
+        }
       } catch {}
     }
     versions[slug] = meta.version;
